@@ -1,0 +1,80 @@
+import Callout from 'nextra-theme-docs/callout'
+import Bleed from 'nextra-theme-docs/bleed'
+import Image from 'next/image'
+import { CodePen } from 'mdx-embed'
+
+# Thepeer inline (chain.js)
+
+<Bleed>
+    <Image src="/chainjs.png" width={2200} height={1600} layout="intrinsic" />
+</Bleed>
+
+## Usage
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>The Peer</title>
+    <script type="application/javascript" src="https://cdn.thepeer.co/v1/chain.js"/>
+</head>
+<body>
+	<div>
+	    <button id="launch-btn">Send Money with Thepeer</button>
+	</div>
+</body>
+<script type="application/javascript">
+    let send = new ThePeer({
+        publicKey: "pspk_one_more_thing",
+        amount: 60000,
+        userReference: "stay-foolish-stay-hungry-forever",
+        receiptUrl: "https://apple.com/thepeer",
+        onSuccess: function (event) {
+            console.log(event);
+        },
+        onClose: function (event) {
+            console.log(event)
+        }
+    });
+
+    send.setup();
+
+    const launch = document.getElementById('launch-btn');
+
+    launch.onclick = function (e) {
+        send.open();
+    };
+</script>
+</html>
+```
+
+|Attribute name|Description|
+|---|---|
+|`publicKey`|Your public key can be found on your dashboard settings|
+|`amount`|The amount you intend to send and must be pass as an integer in kobo|
+|`userReference`|The user reference returned by Thepeer API when a user has been indexed|
+|`receiptURL`|This is a callback to your application's backend where we would pass a query string `?receipt={{receipt_id}}` where you are expected to initiate the [send endpoint](/send/verify-receipt) on your backend using your secret key.|
+
+## Demo
+
+### Sample Users
+
+#### Cash App
+
+- username: `@trojan`
+
+#### Venmo
+
+- username: `@chike`
+
+<Bleed>
+    <CodePen codePenId="YzNMXEN" height={800}/>
+</Bleed>
+
+---
+
+<Callout>
+    **NOTE**
+    * The API key provided must be your public key
+    * Never use your secret key on the client side
+</Callout>
