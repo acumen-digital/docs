@@ -1,0 +1,42 @@
+import { Box } from 'rebass'
+
+# De-index user
+
+This endpoint allows you De-index a user in the event that a user deactivates their account on your platform.
+
+### Endpoint
+
+<Box
+    color='white'
+    bg='red'
+    p={0}
+    my={1}
+    fontWeight={"bold"}
+    width={62}
+    borderRdius={3}
+>DELETE
+</Box>
+
+```
+https://api.thepeer.co/users/delete/{{USER_REFERENCE}}
+```
+
+|URL Parameter|Description|
+|---|---|
+|`{{USER_REFERENCE}}`|the `reference` returned when the user was indexed|
+
+### Sample response
+
+```json
+{
+  "message": "user de-indexed"
+}
+```
+
+---
+
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+You would still be able to view a de-indexed user's transaction on your dashboard and via the API
+</Callout>

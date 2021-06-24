@@ -1,0 +1,73 @@
+import { Box } from 'rebass'
+
+# Index user
+
+In order to make your users resolvable on the SDK, you need to index them on Peerstack.
+Your identifier must match the identifier type registered on your business, at the time
+of writing this we currently support username and email.
+
+### What is identifier type
+
+An `identifier type` is the primary means of user identification on your platform. There are
+various type of identifier types which ranges from `email`, `username`, `phone number`, `Account ID` etc.
+However, we currently support `username` and `email`.
+
+### Endpoint
+
+<Box
+    color='white'
+    bg='orange'
+    p={0}
+    my={1}
+    fontWeight={"bold"}
+    width={45}
+    borderRdius={3}
+>POST
+</Box>
+
+```
+https://api.thepeer.co/users/index
+```
+
+### Sample body
+
+```json
+{
+  "name": "Steve Jobs",
+  "identifier": "steve",
+  "email": "steve@apple.com"
+}
+```
+
+### Sample response
+
+```json
+{
+  "indexed_user": {
+    "name": "Steve Jobs",
+    "identifier": "steve",
+    "identifier_type": "username",
+    "email": "steve@apple.com",
+    "reference": "stay-foolish-stay-hungry"
+  }
+}
+```
+
+### Field requirements
+
+|Field name|Data type|Required|
+|---|---|---|
+|`name`|`string`|`true`|
+|`identifier`|`string`|`true`|
+|`email`|`string`|`true`|
+
+---
+
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+    **NOTE**
+    * `Identifier` types will be validated according to what was selected for your business on signup.
+    * `Identifiers` would be validated based on the `identifier type` for the business.
+    * Save the `reference` returned, it would be used by you in the future to find the user a transaction belongs to.
+</Callout>

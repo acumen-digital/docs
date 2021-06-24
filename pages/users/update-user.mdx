@@ -1,0 +1,61 @@
+# Update user
+
+This endpoint allows you update your user's identifier when they make a profile update to their identifier on your platform.
+
+### Endpoint
+
+```
+https://api.thepeer.co/users/update/{{USER_REFERENCE}}
+```
+
+|URL Parameter|Description|
+|---|---|
+|`{{USER_REFERENCE}}`|the `reference` returned when the user was indexed|
+import { Box } from 'rebass'
+
+### Sample body
+
+<Box
+    color='white'
+    bg='blue'
+    p={0}
+    my={1}
+    fontWeight={"bold"}
+    width={35}
+    borderRdius={3}
+>PUT
+</Box>
+
+```json
+{
+  "identifier": "craig"
+}
+```
+
+### Sample response
+
+```json
+{
+  "indexed_user": {
+    "name": "Criag Federighi",
+    "identifier": "craig",
+    "identifier_type": "username",
+    "email": "craig@apple.com",
+    "reference": "hair-force-one"
+  }
+}
+```
+
+### Field requirements
+
+|Field name|Data type|Required|
+|---|---|---|
+|`identifier`|`string`|`true`|
+
+---
+
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout emoji={"‼️"}>
+    You cannot update an identifier from `username` to `email` and vice versa
+</Callout>
