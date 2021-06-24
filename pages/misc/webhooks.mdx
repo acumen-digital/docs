@@ -1,0 +1,101 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Webhooks
+
+Thepeer sends webhooks for certain events, at the time of this writing; we only send webhooks to receving businesses when a transaction is performed with them.
+
+<Callout emoji={"‼️"}>
+    You must set your webhook URL on your business dashboard in order to receive webhook notifications.
+</Callout>
+
+### Sample webhook payload
+
+```json
+{
+    "type": "transaction",
+    "transaction": {
+        "id": "transaction-identifier",
+        "remark": "Apple Event",
+        "amount": 50000,
+        "type": "peer",
+        "status": "success",
+        "user": {
+            "name": "Tim Cook",
+            "identifier": "tim",
+            "identifier_type": "username",
+            "email": "tim@apple.com",
+            "reference": "one-more-thing"
+        },
+        "mode": "debit",
+        "reference": "transaction-reference",
+        "peer": {
+            "user": {
+                "name": "John Ternuss",
+                "identifier": "john",
+                "identifier_type": "username",
+                "email": "john@apple.com",
+                "reference": "seeing-is-believing"
+            },
+            "business": {
+                "id": "knowledge-and-power",
+                "name": "Apple",
+                "email": "thepeer@apple.com",
+                "logo": null,
+                "identifier_type": "username"
+            }
+        },
+        "created_at": "2021-04-12T19:52:22.000000Z",
+        "updated_at": "2021-04-12T19:52:22.000000Z"
+    }
+}
+```
+
+|Attribute|Description|
+|---|---|
+|`type`|Webhook type|
+|`transaction.id`|The transaction identifier|
+|`transaction.amount`|The receipt value in kobo|
+|`transaction.user`|The user object of the user carrying out the transaction|
+|`transaction.peer`|The receipt peer object contains objects of the user and business the transaction is being carried out with|
+|`transaction.remark`|Transaction remark|
+|`transaction.type`|Transaction type|
+|`transaction.status`|Transaction status|
+|`transaction.mode`|Transaction mode (debit or credit)|
+|`transaction.reference`|Transaction reference|
+
+## Webhook verification
+
+Valid webhook requests have a header with the key `X-Thepeer-Signature` which is a `HMAC SHA1` signature of the request body (hex encoded).
+The request body is signed using your **secret key**.
+
+### Steps
+
+- Sign the entire request body with HMAC SHA1 using your secret key.
+- Compare the result of this signing with the value of the `X-Thepeer-Signature` header.
+- If they match, then the request is indeed from Thepeer
+
+Here's an example in php:
+
+import Bleed from 'nextra-theme-docs/bleed'
+
+<Bleed>
+<>
+```php
+<?php
+
+$signature = hash_hmac('sha1', '{"message":"test signing}', 'your-secret-key');
+
+if ($signature === $_SERVER['X-Thepeer-Signature']) {
+    // return status 200
+} else {
+    // return status 406
+}
+```
+</>
+</Bleed>
+
+---
+
+<Callout emoji={"✅"}>
+    You must return status `200` if a webhook verification is successful unless the Thepeer will retry a couple more times until it stops.
+</Callout>

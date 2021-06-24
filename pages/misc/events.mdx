@@ -1,0 +1,24 @@
+# Events
+
+## Send Events
+
+## Events from Thepeer
+
+|Event name|Description|
+|---|---|
+|`send.success`|Send transaction was sucessful|
+|`send.insufficient_funds`|Business partner does not have sufficient wallet value to honor the transaction
+|`send.server_erorr`|A error from Thepeer|
+|`send.invalid_receipt`|Invalid receipt|
+
+## Events from the developer
+
+import Callout from 'nextra-theme-docs/callout'
+
+<Callout>
+    Thepeer expects the developer to return certain events when actions happens on their platforms
+</Callout>
+
+|Event name|Description|
+|---|---|
+|`send.user_insufficient_funds`|Indexed user does not have sufficient balance to honor the transaction|
