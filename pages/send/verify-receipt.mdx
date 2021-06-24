@@ -1,0 +1,86 @@
+import Callout from 'nextra-theme-docs/callout'
+import {Box} from 'rebass'
+
+# Verify receipt
+
+## What is a receipt
+
+<Callout emoji={"📚"}>
+    **Merriam Webster**
+
+    A writing acknowledging the receiving of goods or money
+</Callout>
+
+Meanwhile, in this context. A receipt is an identifier for a pending transaction.
+It contains essential information that can be used to check if your user has sufficient
+balance on the platform wallet to carry out that transaction.
+
+### Endpoint
+
+<Box
+    color='white'
+    bg='green'
+    p={0}
+    my={1}
+    fontWeight={"bold"}
+    width={35}
+    borderRdius={3}
+>GET
+</Box>
+
+```
+https://api.thepeer.co/verify/{{RECEIPT}}
+```
+
+|URL Parameter|Description|
+|---|---|
+|`{{RECEIPT}}`|the reference returned to your `receiptURL` via the `Chain SDK`|
+
+### Sample response
+
+```json
+{
+    "receipt": {
+        "id": "receipt-identifier",
+        "amount": 50000,
+        "user": {
+            "name": "Tim Cook",
+            "identifier": "tim",
+            "identifier_type": "username",
+            "email": "tim@apple.com",
+            "reference": "one-more-thing"
+        },
+        "peer": {
+            "user": {
+                "name": "John Ternuss",
+                "identifier": "john",
+                "identifier_type": "username",
+                "email": "john@apple.com",
+                "reference": "seeing-is-believing"
+            },
+            "business": {
+                "id": "knowledge-and-power",
+                "name": "Apple",
+                "email": "thepeer@apple.com",
+                "logo": null,
+                "identifier_type": "username"
+            }
+        },
+        "created_at": "2021-04-29T20:28:37.000000Z",
+        "updated_at": "2021-04-29T20:28:37.000000Z"
+    }
+}
+```
+
+|Attribute|Description|
+|---|---|
+|`receipt.id`|the receipt identifier|
+|`receipt.amount`|the receipt value in kobo|
+|`receipt.user`|the user object of the user carrying out the transaction|
+|`receipt.peer`|the receipt peer object contains objects of the user and business the transaction is being carried out with|
+
+---
+<Callout>
+    **NOTE**
+    * You can only get the details of a receipt that belongs to your business
+</Callout>
